@@ -314,6 +314,36 @@ class SatelliteStore {
       }
     }
   }
+  // Add a method to draw the line between two satellites
+  addConnectionLine() {
+    
+    satrec1 = twoline2satrec("1 44713U 19074A   24136.78781773  .00024628  00000+0  16638-2 0  9991", "2 44713  53.0537 282.4944 0001289 110.2028 249.9100 15.06460663248838")
+    satrec2 = twoline2satrec("1 44757U 19074AW  24136.74003981  .00025093  00000+0  10497-2 0  9997", "2 44757  53.0451 288.9189 0003110 156.7147 203.3991 15.23451875248741")
+    
+    const pos1 = getSatelliteLocation(satrec1, this.currentTime, this.startTime);
+    const pos2 = getSatelliteLocation(satrec2, this.currentTime, this.startTime);
+
+    if (!pos1 || !pos2) {
+      console.error('Could not get positions for satellites.');
+      return;
+    }
+
+    console.log('Satellite 1 position:', pos1);
+    console.log('Satellite 2 position:', pos2);
+
+    const line = new Graphic({
+      geometry: new Polyline({
+        paths: [[[pos1.x, pos1.y, pos1.z], [pos2.x, pos2.y, pos2.z]]],
+        spatialReference: { wkid: 4326 }  // Ensure correct spatial reference
+      }),
+      symbol: {
+        type: 'simple-line',
+        color: [0, 255, 0],  // Green color
+        width: 10  // Adjusted for better visibility
+      }
+    });
+
+  }
 }
 
 const satelliteStore = new SatelliteStore();

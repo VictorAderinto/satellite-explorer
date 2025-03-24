@@ -55,6 +55,7 @@ import FeatureLayer from 'https://js.arcgis.com/4.22/@arcgis/core/layers/Feature
 
     // Uncomment this line to update the satellites feature layer
     updateSatellites();
+    addConnectionLine();
     // Debris doesn't need to be updated, the actual location doesn't matter too much
     // updateDebris();
   }
